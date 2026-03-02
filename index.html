@@ -1,1 +1,517 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Street Ballers | Monte Seu Manto</title>
+  <style>
+    :root {
+      --bg: #090909;
+      --surface: #141414;
+      --surface-soft: #1b1b1b;
+      --text: #f6f6f6;
+      --muted: #a9a9a9;
+      --red: #d30f2f;
+      --gold: #d8ad44;
+      --white: #ffffff;
+      --radius: 18px;
+      --shadow: 0 18px 40px rgba(0, 0, 0, 0.4);
+    }
 
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at 90% 0%, rgba(211, 15, 47, 0.2), transparent 30%),
+        radial-gradient(circle at 10% 100%, rgba(216, 173, 68, 0.15), transparent 30%),
+        var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.4;
+    }
+
+    .app {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 18px 16px 110px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .hero {
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      background: linear-gradient(140deg, #0d0d0d, #1a1a1a 70%);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: -30px;
+      right: -40px;
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(211, 15, 47, 0.35), transparent 70%);
+    }
+
+    .brand {
+      font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+      font-size: 2.8rem;
+      letter-spacing: 1px;
+      line-height: 0.9;
+      margin-bottom: 8px;
+    }
+
+    .brand span { color: var(--gold); }
+
+    .sub {
+      color: var(--muted);
+      font-size: 0.95rem;
+      max-width: 92%;
+    }
+
+    .pill-row { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+
+    .pill {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 999px;
+      padding: 6px 10px;
+      color: var(--white);
+      background: rgba(255,255,255,0.05);
+    }
+
+    section.card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .section-title {
+      font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 0.03em;
+      margin-bottom: 4px;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      margin-bottom: 12px;
+      font-size: 0.9rem;
+    }
+
+    .form-grid { display: grid; gap: 10px; }
+
+    label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; color: #d2d2d2; }
+
+    select, input, textarea {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: var(--surface-soft);
+      color: var(--text);
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, var(--red), #ff1841);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      padding: 13px;
+      cursor: pointer;
+      text-transform: uppercase;
+      box-shadow: 0 10px 24px rgba(211, 15, 47, 0.35);
+    }
+
+    .btn.alt {
+      background: linear-gradient(135deg, #c1932f, #f2ca67);
+      color: #121212;
+      box-shadow: 0 10px 24px rgba(216, 173, 68, 0.3);
+    }
+
+    .builder-preview {
+      background: #0f0f0f;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 12px;
+      display: grid;
+      place-items: center;
+    }
+
+    .jersey {
+      width: 150px;
+      height: 175px;
+      background: linear-gradient(170deg, #1c1c1c, #111111);
+      border: 2px solid rgba(255,255,255,0.2);
+      clip-path: polygon(20% 5%, 32% 5%, 38% 11%, 62% 11%, 68% 5%, 80% 5%, 96% 20%, 85% 28%, 85% 95%, 15% 95%, 15% 28%, 4% 20%);
+      position: relative;
+      transition: all 250ms ease;
+      overflow: hidden;
+    }
+
+    .jersey::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(90deg, transparent 0 18px, rgba(255,255,255,0.05) 18px 20px);
+      pointer-events: none;
+    }
+
+    .badge {
+      position: absolute;
+      top: 32px;
+      left: 18px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: 2px solid #111;
+    }
+
+    .name, .number {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      font-family: 'Teko', sans-serif;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+
+    .name { top: 62px; font-size: 1.1rem; letter-spacing: 0.05em; }
+    .number { top: 88px; font-size: 2.3rem; color: var(--gold); }
+
+    .drop-grid, .social-grid, .points-grid { display: grid; gap: 10px; }
+
+    .drop-item, .social-card, .point-card {
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 12px;
+      background: var(--surface);
+    }
+
+    .drop-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 8px;
+      gap: 8px;
+    }
+
+    .timer {
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 0.86rem;
+    }
+
+    .qty {
+      color: #ff8ea1;
+      font-size: 0.83rem;
+      margin-bottom: 10px;
+    }
+
+    .stars { color: var(--gold); margin: 4px 0; }
+
+    .rank-list { list-style: none; display: grid; gap: 6px; margin-top: 6px; }
+
+    .rank-list li {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      padding: 8px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .floating-cta {
+      position: fixed;
+      left: 50%;
+      bottom: 14px;
+      transform: translateX(-50%);
+      width: min(440px, calc(100% - 20px));
+      background: #101010;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 14px;
+      padding: 10px;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.5);
+      display: grid;
+      gap: 8px;
+    }
+
+    .floating-cta p { font-size: 0.82rem; color: #d3d3d3; text-align: center; }
+
+    .status {
+      margin-top: 8px;
+      font-size: 0.82rem;
+      color: var(--gold);
+      min-height: 18px;
+    }
+
+    .help-bar {
+      border: 1px dashed rgba(216, 173, 68, 0.45);
+      background: rgba(216, 173, 68, 0.08);
+      border-radius: 12px;
+      padding: 10px;
+      font-size: 0.82rem;
+      color: #f2e0b0;
+      margin-top: 12px;
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <h1 class="brand">Street <span>Ballers</span></h1>
+      <p class="sub">Camisas sob encomenda com pegada streetwear + futebol raiz. Exclusividade, urgência e respeito de arquibancada.</p>
+      <div class="pill-row">
+        <span class="pill">Sem estoque físico</span>
+        <span class="pill">Drops limitados</span>
+        <span class="pill">Pedido via WhatsApp</span>
+      </div>
+      <p class="help-bar">Sem instalar nada: abra este arquivo <strong>index.html</strong> direto no navegador.</p>
+    </header>
+
+    <section class="card" id="builder">
+      <h2 class="section-title">⚽ Monte Seu Manto</h2>
+      <p class="section-sub">Personalize em segundos e feche o pedido direto no WhatsApp.</p>
+      <div class="form-grid">
+        <div>
+          <label for="region">Liga</label>
+          <select id="region">
+            <option>Brasil</option>
+            <option>Europa</option>
+          </select>
+        </div>
+        <div>
+          <label for="team">Time</label>
+          <select id="team"></select>
+        </div>
+        <div>
+          <label for="model">Modelo</label>
+          <select id="model">
+            <option value="Casa">Casa</option>
+            <option value="Visitante">Visitante</option>
+            <option value="Terceira">Terceira Camisa</option>
+          </select>
+        </div>
+        <div>
+          <label for="size">Tamanho</label>
+          <select id="size">
+            <option>P</option><option>M</option><option>G</option><option>GG</option><option>XG</option>
+          </select>
+        </div>
+        <div>
+          <label for="player">Nome</label>
+          <input id="player" maxlength="12" placeholder="Ex: SANTOS" />
+        </div>
+        <div>
+          <label for="number">Número</label>
+          <input id="number" type="number" min="0" max="99" value="10" />
+        </div>
+      </div>
+      <div class="builder-preview" style="margin-top:12px;">
+        <div class="jersey" id="jersey">
+          <span class="badge"></span>
+          <span class="name" id="previewName">SEU NOME</span>
+          <span class="number" id="previewNumber">10</span>
+        </div>
+      </div>
+      <p class="status" id="builderStatus"></p>
+      <button class="btn" id="sendOrder" style="margin-top:8px;">Finalizar Pedido no WhatsApp</button>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title">🔥 Drops Exclusivos Street Ballers</h2>
+      <p class="section-sub">Coleções raras com janela de compra curta e unidades reduzidas.</p>
+      <div class="drop-grid" id="dropGrid"></div>
+      <button class="btn alt" id="notifyBtn" style="margin-top:12px;">Ativar Notificação de Novo Drop</button>
+      <p class="status" id="notifyStatus"></p>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title">💬 Torcida Street</h2>
+      <p class="section-sub">Comunidade ativa que compra, veste e recomenda.</p>
+      <div class="social-grid">
+        <article class="social-card">
+          <strong>@paulodrop</strong>
+          <p class="stars">★★★★★</p>
+          <p>“Qualidade absurda, caiu como luva. Já pedi mais duas.”</p>
+        </article>
+        <article class="social-card">
+          <strong>@dudacamisas</strong>
+          <p class="stars">★★★★★</p>
+          <p>“Atendimento rápido e o nome personalizado veio perfeito.”</p>
+        </article>
+        <article class="social-card">
+          <strong>Prints de Feedback</strong>
+          <p>✅ Entrega confirmada • ✅ Tecido premium • ✅ Cliente recorrente</p>
+        </article>
+        <article class="social-card">
+          <strong>Ranking Torcida</strong>
+          <ul class="rank-list">
+            <li><span>1º @LeoColecionador</span><span>18 compras</span></li>
+            <li><span>2º @NinaManto</span><span>13 compras</span></li>
+            <li><span>3º @RafaClassic</span><span>11 compras</span></li>
+          </ul>
+        </article>
+        <article class="social-card">
+          <strong>Comentários da Galera</strong>
+          <textarea rows="3" placeholder="Compartilhe sua experiência com a Street Ballers"></textarea>
+          <button class="btn" style="margin-top:8px;">Publicar comentário</button>
+        </article>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title">🏆 Sistema de Pontos</h2>
+      <p class="section-sub">Compre mais, indique amigos e desbloqueie benefícios exclusivos.</p>
+      <div class="points-grid">
+        <article class="point-card"><strong>+100 pontos</strong><p>por compra concluída</p></article>
+        <article class="point-card"><strong>+150 pontos</strong><p>por amigo indicado com primeira compra</p></article>
+        <article class="point-card"><strong>Meta Ouro: 600 pontos</strong><p>frete reduzido + acesso antecipado a drops</p></article>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title">📦 Como Funciona</h2>
+      <p class="section-sub">Modelo 100% sob encomenda para garantir variedade sem estoque parado.</p>
+      <ol style="padding-left:18px; display:grid; gap:6px; color:#d9d9d9; font-size:0.92rem;">
+        <li>Você monta e envia seu pedido pelo app.</li>
+        <li>A Street Ballers confirma com fornecedor parceiro.</li>
+        <li>Produção e envio só após confirmação para máxima segurança.</li>
+      </ol>
+    </section>
+  </main>
+
+  <aside class="floating-cta">
+    <p>🔥 Novo drop em andamento: poucas unidades restantes.</p>
+    <button class="btn" id="quickOrder">Garantir a Minha Agora</button>
+  </aside>
+
+  <script>
+    const teams = {
+      Brasil: ['Flamengo', 'Corinthians', 'Palmeiras', 'São Paulo', 'Vasco'],
+      Europa: ['Real Madrid', 'Barcelona', 'Milan', 'Arsenal', 'PSG']
+    };
+
+    const modelThemes = {
+      Casa: 'linear-gradient(170deg, #1c1c1c, #111111)',
+      Visitante: 'linear-gradient(170deg, #ededed, #cacaca)',
+      Terceira: 'linear-gradient(170deg, #5f0014, #2c000a)'
+    };
+
+    const region = document.getElementById('region');
+    const team = document.getElementById('team');
+    const model = document.getElementById('model');
+    const player = document.getElementById('player');
+    const number = document.getElementById('number');
+    const previewName = document.getElementById('previewName');
+    const previewNumber = document.getElementById('previewNumber');
+    const jersey = document.getElementById('jersey');
+    const status = document.getElementById('builderStatus');
+
+    const loadTeams = () => {
+      team.innerHTML = '';
+      teams[region.value].forEach((t) => {
+        const op = document.createElement('option');
+        op.textContent = t;
+        team.appendChild(op);
+      });
+    };
+
+    const updatePreview = () => {
+      const cleanName = (player.value || 'SEU NOME').slice(0, 12).toUpperCase();
+      previewName.textContent = cleanName;
+      previewNumber.textContent = number.value || '10';
+      jersey.style.background = modelThemes[model.value];
+      previewName.style.color = model.value === 'Visitante' ? '#111' : '#fff';
+      previewNumber.style.color = model.value === 'Visitante' ? '#c1932f' : '#d8ad44';
+      status.textContent = `${team.value} • ${model.value} • Tamanho ${document.getElementById('size').value}`;
+    };
+
+    region.addEventListener('change', () => { loadTeams(); updatePreview(); });
+    [team, model, player, number, document.getElementById('size')].forEach((el) => el.addEventListener('input', updatePreview));
+
+    document.getElementById('sendOrder').addEventListener('click', () => {
+      const msg = encodeURIComponent(
+        `Fala Street Ballers! Quero encomendar:%0A` +
+        `• Liga: ${region.value}%0A• Time: ${team.value}%0A• Modelo: ${model.value}%0A` +
+        `• Tamanho: ${document.getElementById('size').value}%0A` +
+        `• Nome: ${previewName.textContent}%0A• Número: ${previewNumber.textContent}`
+      );
+      const url = `https://wa.me/5500000000000?text=${msg}`;
+      const opened = window.open(url, '_blank');
+      if (!opened) {
+        window.location.href = url;
+      }
+    });
+
+    const drops = [
+      { name: 'Milan 2006 Retrô', end: Date.now() + 24 * 3600 * 1000, qty: 17 },
+      { name: 'Corinthians Libertadores', end: Date.now() + 48 * 3600 * 1000, qty: 9 }
+    ];
+
+    const dropGrid = document.getElementById('dropGrid');
+
+    const renderDrops = () => {
+      dropGrid.innerHTML = '';
+      drops.forEach((drop) => {
+        const diff = Math.max(0, drop.end - Date.now());
+        const h = String(Math.floor(diff / 3600000)).padStart(2, '0');
+        const m = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
+        const s = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
+
+        const card = document.createElement('article');
+        card.className = 'drop-item';
+        card.innerHTML = `
+          <div class="drop-top">
+            <strong>${drop.name}</strong>
+            <span class="timer">${h}:${m}:${s}</span>
+          </div>
+          <p class="qty">${drop.qty} unidades restantes</p>
+          <button class="btn">Garantir a Minha</button>
+        `;
+        card.querySelector('button').addEventListener('click', () => document.getElementById('sendOrder').click());
+        dropGrid.appendChild(card);
+      });
+    };
+
+    document.getElementById('quickOrder').addEventListener('click', () => document.getElementById('sendOrder').click());
+
+    document.getElementById('notifyBtn').addEventListener('click', async () => {
+      const nStatus = document.getElementById('notifyStatus');
+      if (!('Notification' in window)) {
+        nStatus.textContent = 'Notificações não suportadas neste dispositivo.';
+        return;
+      }
+      const permission = await Notification.requestPermission();
+      if (permission === 'granted') {
+        nStatus.textContent = 'Notificações ativadas! Você será avisado no próximo drop.';
+        new Notification('Street Ballers', { body: 'Alerta de drop ativado com sucesso.' });
+      } else {
+        nStatus.textContent = 'Permissão negada. Ative nas configurações do navegador.';
+      }
+    });
+
+    loadTeams();
+    updatePreview();
+    renderDrops();
+    setInterval(renderDrops, 1000);
+  </script>
+</body>
+</html>
