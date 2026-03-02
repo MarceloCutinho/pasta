@@ -4,9 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Street Ballers | Monte Seu Manto</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Teko:wght@500;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg: #090909;
@@ -24,7 +21,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
       background:
         radial-gradient(circle at 90% 0%, rgba(211, 15, 47, 0.2), transparent 30%),
         radial-gradient(circle at 10% 100%, rgba(216, 173, 68, 0.15), transparent 30%),
@@ -64,7 +61,7 @@
     }
 
     .brand {
-      font-family: 'Teko', sans-serif;
+      font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
       font-size: 2.8rem;
       letter-spacing: 1px;
       line-height: 0.9;
@@ -102,7 +99,7 @@
     }
 
     .section-title {
-      font-family: 'Teko', sans-serif;
+      font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
       font-size: 1.8rem;
       letter-spacing: 0.03em;
       margin-bottom: 4px;
@@ -264,6 +261,16 @@
       color: var(--gold);
       min-height: 18px;
     }
+
+    .help-bar {
+      border: 1px dashed rgba(216, 173, 68, 0.45);
+      background: rgba(216, 173, 68, 0.08);
+      border-radius: 12px;
+      padding: 10px;
+      font-size: 0.82rem;
+      color: #f2e0b0;
+      margin-top: 12px;
+    }
   </style>
 </head>
 <body>
@@ -276,6 +283,7 @@
         <span class="pill">Drops limitados</span>
         <span class="pill">Pedido via WhatsApp</span>
       </div>
+      <p class="help-bar">Sem instalar nada: abra este arquivo <strong>index.html</strong> direto no navegador.</p>
     </header>
 
     <section class="card" id="builder">
@@ -446,7 +454,11 @@
         `• Tamanho: ${document.getElementById('size').value}%0A` +
         `• Nome: ${previewName.textContent}%0A• Número: ${previewNumber.textContent}`
       );
-      window.open(`https://wa.me/5500000000000?text=${msg}`, '_blank');
+      const url = `https://wa.me/5500000000000?text=${msg}`;
+      const opened = window.open(url, '_blank');
+      if (!opened) {
+        window.location.href = url;
+      }
     });
 
     const drops = [
